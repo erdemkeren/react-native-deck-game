@@ -61,7 +61,7 @@ class DeckForm extends React.Component {
           }}
             onPress={this.onSubmit}
           >
-            <Text>Save</Text>
+            <Text>Create Deck</Text>
           </Button>
         </Content>
       </Container>
