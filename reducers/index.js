@@ -1,7 +1,7 @@
 import { RETRIEVED_DECKS, STORED_DECK } from '../actions/types'
 
 const initialState = {
-  decks: {}
+  decks: {},
 }
 
 /**
@@ -9,11 +9,11 @@ const initialState = {
  *
  * @return {object}
  */
-function decks (state = initialState, action) {
+function decks(state = initialState, action) {
   switch (action.type) {
     case RETRIEVED_DECKS:
       return {
-        decks: action.decks
+        decks: action.decks,
       }
     case STORED_DECK:
       const { id, ...data } = action.deck
@@ -21,8 +21,8 @@ function decks (state = initialState, action) {
       return {
         decks: {
           ...state.decks,
-          [id]: data
-        }
+          [id]: data,
+        },
       }
   }
 

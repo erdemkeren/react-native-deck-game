@@ -1,12 +1,14 @@
 import React from 'react'
-import { Container,
+import {
+  Container,
   Content,
   Item,
   Form,
   Label,
   Input,
   Button,
-  Text } from 'native-base'
+  Text,
+} from 'native-base'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
 import { storedDeck } from '../actions'
@@ -18,16 +20,16 @@ class CardForm extends React.Component {
     answer: '',
   }
   static navigationOptions = {
-    title: "New Card"
+    title: 'New Card',
   }
-  handleQuestionChange = (question) => {
+  handleQuestionChange = question => {
     this.setState({
-      question: question
+      question: question,
     })
   }
-  handleAnswerChange = (answer) => {
+  handleAnswerChange = answer => {
     this.setState({
-      answer: answer
+      answer: answer,
     })
   }
   onSubmit = () => {
@@ -45,7 +47,7 @@ class CardForm extends React.Component {
   }
   render() {
     const { question, answer } = this.state
-    const isValid = (question !== '') && (answer !== '')
+    const isValid = question !== '' && answer !== ''
 
     return (
       <Container>
@@ -54,24 +56,30 @@ class CardForm extends React.Component {
             <Item first floatingLabel>
               <Label>What is the question</Label>
               <Input
-                name='question'
-                onChangeText={(question) => this.handleQuestionChange(question)}
+                name="question"
+                onChangeText={question => this.handleQuestionChange(question)}
               />
             </Item>
 
             <Item last floatingLabel>
               <Label>What is the answer of the question?</Label>
               <Input
-                name='answer'
-                onChangeText={(answer) => this.handleAnswerChange(answer)}
+                name="answer"
+                onChangeText={answer => this.handleAnswerChange(answer)}
               />
             </Item>
           </Form>
-          <Button disabled={! isValid} block primary style={{
-            marginTop: 50,
-            marginLeft: 20,
-            marginRight: 20,
-          }} onPress={this.onSubmit}>
+          <Button
+            disabled={!isValid}
+            block
+            primary
+            style={{
+              marginTop: 50,
+              marginLeft: 20,
+              marginRight: 20,
+            }}
+            onPress={this.onSubmit}
+          >
             <Text>Save</Text>
           </Button>
         </Content>

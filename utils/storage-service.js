@@ -7,17 +7,15 @@ import { DECK_STORAGE_KEY, NOTIFICATION_KEY } from 'react-native-dotenv'
  * @return {promise}
  */
 export function retrieveDecks() {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY).then((data) => {
-      if(data !== null) {
-        return JSON.parse(data)
-      }
+  return AsyncStorage.getItem(DECK_STORAGE_KEY).then(data => {
+    if (data !== null) {
+      return JSON.parse(data)
+    }
 
-      AsyncStorage.setItem(
-        DECK_STORAGE_KEY, JSON.stringify(data = {})
-      )
+    AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify((data = {})))
 
-      return data
-    })
+    return data
+  })
 }
 
 /**
@@ -25,9 +23,10 @@ export function retrieveDecks() {
  *
  * @return {promise}
  */
-export function storeDeck({id, ...data}) {
+export function storeDeck({ id, ...data }) {
   return AsyncStorage.mergeItem(
-    DECK_STORAGE_KEY, JSON.stringify({[id]: data})
+    DECK_STORAGE_KEY,
+    JSON.stringify({ [id]: data }),
   )
 }
 
@@ -36,8 +35,7 @@ export function storeDeck({id, ...data}) {
  *
  * @return {promise}
  */
-export function retrieveLocalNotificationStatus()
-{
+export function retrieveLocalNotificationStatus() {
   return AsyncStorage.getItem(NOTIFICATION_KEY).then(JSON.parse)
 }
 
@@ -46,8 +44,7 @@ export function retrieveLocalNotificationStatus()
  *
  * @return {promise}
  */
-export function storeLocalNotificationStatus(status)
-{
+export function storeLocalNotificationStatus(status) {
   return AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
 }
 
@@ -56,7 +53,6 @@ export function storeLocalNotificationStatus(status)
  *
  * @return {promise}
  */
-export function removeLocalNotificationStatus()
-{
+export function removeLocalNotificationStatus() {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
 }

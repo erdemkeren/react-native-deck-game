@@ -1,4 +1,4 @@
-import Expo from "expo"
+import Expo from 'expo'
 import React from 'react'
 import reducer from './reducers'
 import { createStore } from 'redux'
@@ -14,56 +14,60 @@ import { scheduleLocalNotification } from './utils/local-notification-service'
 
 const store = createStore(reducer)
 
-const Stack = StackNavigator({
-  DeckList: {
-    screen: DeckList,
+const Stack = StackNavigator(
+  {
+    DeckList: {
+      screen: DeckList,
+    },
+    NewDeck: {
+      screen: DeckForm,
+    },
+    NewCard: {
+      screen: CardForm,
+    },
+    DeckView: {
+      screen: DeckView,
+    },
+    QuizView: {
+      screen: QuizView,
+    },
   },
-  NewDeck: {
-    screen: DeckForm,
+  {
+    navigationOptions: {
+      headerStyle: {
+        marginTop:
+          Platform.OS === 'android' ? Expo.Constants.statusBarHeight : 0,
+      },
+    },
   },
-  NewCard: {
-    screen: CardForm,
-  },
-  DeckView: {
-    screen: DeckView,
-  },
-  QuizView: {
-    screen: QuizView,
-  }
-}, {
-  navigationOptions: {
-    headerStyle: {
-      marginTop: Platform.OS === 'android' ? Expo.Constants.statusBarHeight : 0
-    }
-  }
-})
+)
 
 export default class App extends React.Component {
   state = {
-    isReady: false
-  };
+    isReady: false,
+  }
   async componentWillMount() {
     await Expo.Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
-    });
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'),
+    })
 
-    this.setState({ isReady: true });
+    this.setState({ isReady: true })
   }
   componentDidMount() {
     scheduleLocalNotification()
   }
   render() {
     if (!this.state.isReady) {
-      return <Expo.AppLoading />;
+      return <Expo.AppLoading />
     }
 
     return (
       <Provider store={store}>
         <Stack />
       </Provider>
-    );
+    )
   }
 }
 
@@ -74,4 +78,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

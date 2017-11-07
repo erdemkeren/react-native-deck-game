@@ -6,7 +6,13 @@ import { deckskRetrieved } from '../actions'
 import { Container, Content, Fab } from 'native-base'
 import { retrieveDecks } from '../utils/storage-service'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { StyleSheet, Platform, TouchableOpacity, View, Text } from 'react-native'
+import {
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+  View,
+  Text,
+} from 'react-native'
 
 /**
  * Get the ios new deck button component.
@@ -30,16 +36,17 @@ function IosNewDeckButton({ onPress }) {
  *
  * @return {component}
  */
-function AndroidNewDeckFab ({ onPress }) {
+function AndroidNewDeckFab({ onPress }) {
   return (
     <Fab
       active={true}
       direction="up"
-      containerStyle={{ }}
+      containerStyle={{}}
       style={{ backgroundColor: '#5067FF' }}
       position="bottomRight"
-      onPress={onPress}>
-        <MaterialCommunityIcons name="plus" />
+      onPress={onPress}
+    >
+      <MaterialCommunityIcons name="plus" />
     </Fab>
   )
 }
@@ -52,28 +59,23 @@ function AndroidNewDeckFab ({ onPress }) {
 function ReviewerGreeting() {
   return (
     <View style={styles.center}>
-      <MaterialCommunityIcons
-        name='human-greeting'
-        size={80}
-      />
+      <MaterialCommunityIcons name="human-greeting" size={80} />
       <Text>Hello Reviewer!</Text>
       <Text>Create a deck to start!</Text>
     </View>
   )
 }
 
-class DeckList extends React.Component
-{
+class DeckList extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Decks',
-      headerRight: (
-        Platform.OS === 'ios' &&
-            <IosNewDeckButton onPress={() => navigation.navigate('NewDeck')} />
-      )
+      headerRight: Platform.OS === 'ios' && (
+        <IosNewDeckButton onPress={() => navigation.navigate('NewDeck')} />
+      ),
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     const { dispatch } = this.props
 
     retrieveDecks().then(decks => dispatch(deckskRetrieved(decks)))
@@ -81,15 +83,18 @@ class DeckList extends React.Component
   render() {
     const { decks, navigation } = this.props
 
-    if(decks.length === 0) {
+    if (decks.length === 0) {
       return (
         <View style={styles.center}>
           <ReviewerGreeting />
-          
-          {Platform.OS === 'android' &&
-                <AndroidNewDeckFab
-                  onPress={() => {navigation.navigate('NewDeck')}}
-                />}
+
+          {Platform.OS === 'android' && (
+            <AndroidNewDeckFab
+              onPress={() => {
+                navigation.navigate('NewDeck')
+              }}
+            />
+          )}
         </View>
       )
     }
@@ -97,20 +102,22 @@ class DeckList extends React.Component
     return (
       <Container>
         <Content>
-          {decks.map((deck) => (
+          {decks.map(deck => (
             <TouchableOpacity
               key={deck.id}
-              onPress={() => navigation.navigate('DeckView', {deck: deck})}
+              onPress={() => navigation.navigate('DeckView', { deck: deck })}
             >
               <DeckFace deck={deck} isListView={true} />
             </TouchableOpacity>
-
           ))}
         </Content>
-        {Platform.OS === 'android' &&
-              <AndroidNewDeckFab
-                onPress={() => {navigation.navigate('NewDeck')}}
-              />}
+        {Platform.OS === 'android' && (
+          <AndroidNewDeckFab
+            onPress={() => {
+              navigation.navigate('NewDeck')
+            }}
+          />
+        )}
       </Container>
     )
   }
@@ -124,8 +131,8 @@ const styles = StyleSheet.create({
   },
   rightNavBtn: {
     color: '#007AFF',
-    paddingRight: 10
-  }
+    paddingRight: 10,
+  },
 })
 
 function mapStateToProps(state) {
@@ -136,10 +143,8 @@ function mapStateToProps(state) {
       container.push(deck)
 
       return container
-    }, [])
+    }, []),
   }
 }
 
-export default connect(
-  mapStateToProps
-)(DeckList)
+export default connect(mapStateToProps)(DeckList)

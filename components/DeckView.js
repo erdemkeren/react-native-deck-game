@@ -26,11 +26,9 @@ class DeckView extends React.Component {
 function mapStateToProps(state, props) {
   return {
     deck: Object.keys(state.decks).filter(
-      (id) => (id === props.navigation.state.params.deckId)
-    )
+      id => id === props.navigation.state.params.deckId,
+    ),
   }
 }
 
-export default connect(
-  mapStateToProps
-)(DeckView)
+export default connect(mapStateToProps)(DeckView)

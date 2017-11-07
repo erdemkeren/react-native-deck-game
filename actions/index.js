@@ -9,7 +9,7 @@ import { RETRIEVED_DECKS, STORED_DECK } from './types'
 export function deckskRetrieved(decks) {
   return {
     type: RETRIEVED_DECKS,
-    decks
+    decks,
   }
 }
 
@@ -22,6 +22,6 @@ export function deckskRetrieved(decks) {
 export function storedDeck(deck) {
   return {
     type: STORED_DECK,
-    deck
+    deck,
   }
 }

@@ -1,8 +1,8 @@
 import {
   retrieveLocalNotificationStatus,
   storeLocalNotificationStatus,
-  removeLocalNotificationStatus
- } from './storage-service'
+  removeLocalNotificationStatus,
+} from './storage-service'
 import { Notifications, Permissions } from 'expo'
 
 /**
@@ -10,52 +10,50 @@ import { Notifications, Permissions } from 'expo'
  *
  * @return {promise}
  */
- export function scheduleLocalNotification () {
-   retrieveLocalNotificationStatus().then((data) => {
-     const permissionExists = data !== null
-     if(! permissionExists) {
-       _askForNotificationPermissions().then(({status}) => {
-         if(status === 'granted') {
-           Notifications.cancelAllScheduledNotificationsAsync()
-           Notifications.scheduleLocalNotificationAsync(
-             _makeNotification(), {
-               time: _getNextNotificationDate(),
-               repeat: 'day',
-             }
-           )
+export function scheduleLocalNotification() {
+  retrieveLocalNotificationStatus().then(data => {
+    const permissionExists = data !== null
+    if (!permissionExists) {
+      _askForNotificationPermissions().then(({ status }) => {
+        if (status === 'granted') {
+          Notifications.cancelAllScheduledNotificationsAsync()
+          Notifications.scheduleLocalNotificationAsync(_makeNotification(), {
+            time: _getNextNotificationDate(),
+            repeat: 'day',
+          })
 
-           storeLocalNotificationStatus(true)
-         }
-       })
-     }
-   })
- }
+          storeLocalNotificationStatus(true)
+        }
+      })
+    }
+  })
+}
 
- /**
-  * Clear the scheduled local notification.
-  *
-  * @return {promise}
-  */
- export function clearLocalNotification () {
-   return removeLocalNotificationStatus().then(
-     Notifications.cancelAllScheduledNotificationsAsync
-   )
- }
+/**
+ * Clear the scheduled local notification.
+ *
+ * @return {promise}
+ */
+export function clearLocalNotification() {
+  return removeLocalNotificationStatus().then(
+    Notifications.cancelAllScheduledNotificationsAsync,
+  )
+}
 
- /**
-  * Determine if the application has permissions for notifications or not.
-  *
-  * @return {promise}
-  */
+/**
+ * Determine if the application has permissions for notifications or not.
+ *
+ * @return {promise}
+ */
 function _askForNotificationPermissions() {
-   return Permissions.askAsync(Permissions.NOTIFICATIONS)
- }
+  return Permissions.askAsync(Permissions.NOTIFICATIONS)
+}
 
- /**
-  * Get the next notiication date.
-  *
-  * @return {Date}
-  */
+/**
+ * Get the next notiication date.
+ *
+ * @return {Date}
+ */
 function _getNextNotificationDate() {
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
@@ -70,18 +68,18 @@ function _getNextNotificationDate() {
  *
  * @return {object}
  */
-function _makeNotification () {
- return {
-   title: 'Hey!',
-   body: '🎲 I want to play a game!',
-   ios: {
-     sound: true,
-   },
-   android: {
-     sound: true,
-     priority: 'high',
-     sticky: false,
-     vibrate: true,
-   }
- }
+function _makeNotification() {
+  return {
+    title: 'Hey!',
+    body: '🎲 I want to play a game!',
+    ios: {
+      sound: true,
+    },
+    android: {
+      sound: true,
+      priority: 'high',
+      sticky: false,
+      vibrate: true,
+    },
+  }
 }
