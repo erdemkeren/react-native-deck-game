@@ -1,0 +1,2 @@
+export const STORED_DECK = 'STORED_DECK'
+export const RETRIEVED_DECKS = 'RETRIEVED_DECKS'
